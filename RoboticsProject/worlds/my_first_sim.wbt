@@ -47,7 +47,7 @@ Solid {
       appearance Appearance {
         texture ImageTexture {
           url [
-            "C:/Users/Mack Qian/Downloads/redlefthand.jpg"
+            "assets/redlefthand.jpg"
           ]
         }
       }
