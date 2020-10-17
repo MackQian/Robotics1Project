@@ -1,0 +1,62 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  basicTimeStep 16
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.2499069721602576 0.9515934584242673 0.17893125816870173 5.239945079490073
+  position -4.395110473853567 1.5218401552657426 3.4133156677076406
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 3.5 4
+  floorTileSize 0.25 0.25
+  wallHeight 0.05
+}
+WoodenBox {
+  translation -1.24 0.11 0.97
+  size 1 0.2 0.5
+}
+WoodenBox {
+  translation -0.27 0.11 -0.24
+  name "wooden box(2)"
+  size 1 0.2 0.5
+}
+WoodenBox {
+  translation 0.27 0.11 1.49
+  rotation 0 1 0 -1.5707953071795862
+  name "wooden box(1)"
+  size 1 0.2 0.5
+}
+Youbot {
+  translation -1.36 0.12 1.75
+}
+BiscuitBox {
+  translation -0.26 0.24 -0.1
+  rotation 0.5773509358554485 -0.5773509358554485 0.5773489358556708 2.0944
+  size 0.12 0.01 0.05
+}
+Solid {
+  translation 0.1 0.1 1.71
+  scale 2 2 2
+  children [
+    Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url [
+            "C:/Users/Mack Qian/Downloads/redlefthand.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject Box {
+    size 0.1 0.1 0.1
+  }
+}
