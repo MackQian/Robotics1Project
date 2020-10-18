@@ -4,8 +4,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.2499069721602576 0.9515934584242673 0.17893125816870173 5.239945079490073
-  position -4.395110473853567 1.5218401552657426 3.4133156677076406
+  orientation 0.8091944083466381 0.5105650538910699 0.2907365392339654 6.0070220226693785
+  position -0.516929899786308 1.1317654745858758 4.5422303397666255
 }
 TexturedBackground {
 }
@@ -15,6 +15,11 @@ RectangleArena {
   floorSize 3.5 4
   floorTileSize 0.25 0.25
   wallHeight 0.05
+}
+WoodenBox {
+  translation -1.52 0.275 0.36
+  name "wooden box(3)"
+  size 0.4 0.55 0.6
 }
 WoodenBox {
   translation -1.24 0.11 0.97
@@ -29,7 +34,7 @@ WoodenBox {
   translation 0.27 0.11 1.49
   rotation 0 1 0 -1.5707953071795862
   name "wooden box(1)"
-  size 1 0.2 0.5
+  size 1 0.2 0.7
 }
 Youbot {
   translation -1.36 0.12 1.75
@@ -37,6 +42,18 @@ Youbot {
 BiscuitBox {
   translation -0.26 0.24 -0.1
   rotation 0.5773509358554485 -0.5773509358554485 0.5773489358556708 2.0944
+  size 0.12 0.01 0.05
+}
+BiscuitBox {
+  translation 0.499999 0.239992 1.74
+  rotation -9.236343672883591e-09 -0.707108281185553 0.70710528118436 -3.1415853071795863
+  name "biscuit box(2)"
+  size 0.12 0.01 0.05
+}
+BiscuitBox {
+  translation -1.38 0.579997 0.410003
+  rotation -9.236343672883591e-09 -0.707108281185553 0.70710528118436 -3.1415853071795863
+  name "biscuit box(1)"
   size 0.12 0.01 0.05
 }
 Solid {
