@@ -4,22 +4,33 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.8091944083466381 0.5105650538910699 0.2907365392339654 6.0070220226693785
-  position -0.516929899786308 1.1317654745858758 4.5422303397666255
+  orientation 0.15689706077412155 -0.9820327052728545 -0.1048574179298744 4.621615136158381
+  position 7.453552206921757 2.6247362498731075 -1.0393188252773307
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
-  floorSize 3.5 4
+  translation 0 0 -0.5
+  floorSize 3.5 5
   floorTileSize 0.25 0.25
   wallHeight 0.05
 }
 WoodenBox {
-  translation -1.52 0.275 0.36
+  translation -1.55 0.275 0.36
   name "wooden box(3)"
   size 0.4 0.55 0.6
+}
+WoodenBox {
+  translation 0.22 0.125 -1.25
+  name "wooden box(5)"
+  size 3.5 0.2 0.6
+}
+WoodenBox {
+  translation -1.52 0.495 -1.25
+  name "wooden box(4)"
+  size 0.4 1 0.6
 }
 WoodenBox {
   translation -1.24 0.11 0.97
@@ -31,28 +42,107 @@ WoodenBox {
   size 1 0.2 0.5
 }
 WoodenBox {
+  translation -0.27 0.11 -2.4
+  name "wooden box(6)"
+  size 1 0.2 0.5
+}
+Solid {
+  translation 1.45 0.03 -1.24
+  rotation 9.5898e-09 1 9.58979e-09 -1.5707953071795862
+  scale 0.3 0.3 0.3
+  children [
+    DEF RAMP Group {
+      children [
+        Transform {
+          translation -1.841 0.45 0
+          rotation 0 0 1 0.5236
+          children [
+            Shape {
+              appearance DEF APPEARANCE PBRAppearance {
+                baseColor 0.5 0.5 0.5
+                roughness 0.3
+                metalness 0
+              }
+              geometry Box {
+                size 2 0.1 2
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0.9434 0
+          children [
+            Shape {
+              appearance USE APPEARANCE
+              geometry Box {
+                size 2 0.1 2
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 1.841 0.45 0
+          rotation 0 0 1 -0.5236
+          children [
+            Shape {
+              appearance USE APPEARANCE
+              geometry Box {
+                size 2 0.1 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "ramp 30 degrees"
+  model "ramp 30 degrees"
+  boundingObject USE RAMP
+}
+RubberDuck {
+  translation -1.4079766895115091 1.0154690091024332 -0.9950431688408691
+  rotation 7.124043348679607e-13 1 4.310580035899488e-14 -0.0017674182505884777
+}
+WoodenBox {
   translation 0.27 0.11 1.49
   rotation 0 1 0 -1.5707953071795862
   name "wooden box(1)"
   size 1 0.2 0.7
 }
 Youbot {
-  translation -1.36 0.12 1.75
+  hidden position_0_0 9.132185243109814e-10
+  hidden position_0_1 9.126333473040661e-10
+  hidden position_0_2 -9.405844991761114e-10
+  hidden position_0_3 -9.417071566986124e-10
+  hidden position_1_0 9.769691027708344e-07
+  hidden rotation_2 0 0 1 9.771344846937158e-07
+  hidden position_2_0 1.570002634381494
+  hidden rotation_3 0 -1 0 1.570002634381494
+  hidden position_3_0 -2.6350014759978038
+  hidden rotation_4 0 0.9999999999999999 0 2.6350014759978038
+  hidden position_4_0 1.7800004229911044
+  hidden rotation_5 0 -1 0 1.7800004229911044
+  hidden position_5_0 -9.220788713408021e-08
+  hidden rotation_6 0 0 -1 9.424321830774485e-08
+  hidden position_6_0 1.2314413067675205e-11
+  hidden position_6_1 -1.231308450143504e-11
+  translation -1.359729898493116 0.10193777049345197 1.7499940643352787
+  rotation 0.9999993680079945 -0.0008260237261198519 0.0007626718925599744 -1.5708374065847532
 }
 BiscuitBox {
-  translation -0.26 0.24 -0.1
-  rotation 0.5773509358554485 -0.5773509358554485 0.5773489358556708 2.0944
+  translation -0.25999995817658866 0.23492152000000008 -0.10000012842252044
+  rotation 0.5773496252796477 -0.5773505911443458 0.5773505911443452 2.0943960682584306
   size 0.12 0.01 0.05
 }
 BiscuitBox {
-  translation 0.499999 0.239992 1.74
-  rotation -9.236343672883591e-09 -0.707108281185553 0.70710528118436 -3.1415853071795863
+  translation 0.49999912954134845 0.23492152000000008 1.7399998939343235
+  rotation -1.8412296392221332e-06 -0.7071067811853496 0.7071067811853482 -3.1415889711491682
   name "biscuit box(2)"
   size 0.12 0.01 0.05
 }
 BiscuitBox {
-  translation -1.38 0.579997 0.410003
-  rotation -9.236343672883591e-09 -0.707108281185553 0.70710528118436 -3.1415853071795863
+  translation -1.422595728182892 0.5749215200000003 0.40999300159460017
+  rotation -1.7918350899960945e-06 -0.7071067811854139 0.7071067811854109 -3.1415890699195033
   name "biscuit box(1)"
   size 0.12 0.01 0.05
 }
