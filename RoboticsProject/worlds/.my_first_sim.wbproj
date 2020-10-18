@@ -7,4 +7,4 @@ centralWidgetVisible: 1
 orthographicViewHeight: 1
 textFiles: 0 "controllers/cameraTest/cameraTest.py"
 consoles: Console:All:All
-renderingDevicePerspectives: youBot:camera;1;1;0;0
+renderingDevicePerspectives: youBot:camera;1;1.23438;0;0
