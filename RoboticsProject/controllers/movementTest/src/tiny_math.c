@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "tiny_math.h"
+#include <include/tiny_math.h>
 #include <math.h>
 
 void vector3_set_values(Vector3 *vect, double u, double v, double w) {

@@ -18,9 +18,9 @@
  * Description:   Implement the functions defined in base.h
  */
 
-#include "base.h"
+#include <include/base.h>
 
-#include "tiny_math.h"
+#include <include/tiny_math.h>
 
 #include <webots/compass.h>
 #include <webots/gps.h>

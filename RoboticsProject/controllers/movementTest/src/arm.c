@@ -18,7 +18,7 @@
  * Description:   Implement the functions defined in arm.h
  */
 
-#include "arm.h"
+#include <include/arm.h>
 
 #include <webots/motor.h>
 #include <webots/robot.h>

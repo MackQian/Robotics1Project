@@ -12,10 +12,6 @@
  */
 #include <webots/robot.h>
 
-/*
- * You may want to add macros here.
- */
-#define TIME_STEP 64
 
 /*
  * This is the main program.
@@ -25,9 +21,14 @@
 #include <webots/keyboard.h>
 #include <webots/robot.h>
 
-#include <arm.h>
-#include <base.h>
-#include <gripper.h>
+#include <include/arm.h>
+#include <src/arm.c>
+#include <include/base.h>
+#include <src/base.c>
+#include <include/gripper.h>
+#include <src/gripper.c>
+#include <include/tiny_math.h>
+#include <src/tiny_math.c>
 
 #include <math.h>
 #include <stdio.h>
@@ -35,6 +36,17 @@
 #include <string.h>
 
 #define TIME_STEP 32
+#define KEY_W 87
+#define KEY_A 65
+#define KEY_S 83
+#define KEY_D 68
+#define KEY_R 82
+#define KEY_H 72
+#define KEY_C 67
+#define KEY_Z 90
+#define KEY_G 71
+#define KEY_F 70
+#define KEY_I 73
 
 static void step() {
   if (wb_robot_step(TIME_STEP) == -1) {
@@ -124,6 +136,22 @@ int main(int argc, char **argv) {
     int c = wb_keyboard_get_key();
     if ((c >= 0) && c != pc) {
       switch (c) {
+        case KEY_W:
+          printf("Increase arm height\n");
+          arm_increase_height();
+          break;
+        case KEY_A:
+          printf("Decrease arm orientation\n");
+          arm_decrease_orientation();
+          break;
+         case KEY_S:
+          printf("Decrease arm height\n");
+          arm_decrease_height();
+          break;
+         case KEY_D:
+          printf("Increase arm orientation\n");
+          arm_increase_orientation();
+          break;
         case WB_KEYBOARD_UP:
           printf("Go forwards\n");
           base_forwards();
@@ -133,12 +161,12 @@ int main(int argc, char **argv) {
           base_backwards();
           break;
         case WB_KEYBOARD_LEFT:
-          printf("Strafe left\n");
-          base_strafe_left();
+          printf("Turn left\n");
+          base_turn_left();
           break;
         case WB_KEYBOARD_RIGHT:
-          printf("Strafe right\n");
-          base_strafe_right();
+          printf("Turn right\n");
+          base_turn_right();
           break;
         case WB_KEYBOARD_PAGEUP:
           printf("Turn left\n");
@@ -148,45 +176,71 @@ int main(int argc, char **argv) {
           printf("Turn right\n");
           base_turn_right();
           break;
-        case WB_KEYBOARD_END:
+        case KEY_Z:
+          printf("Zero the Arm Orientations\n");
+          arm_set_sub_arm_rotation(ARM1, 0);
+          arm_set_sub_arm_rotation(ARM2, 0);
+          arm_set_sub_arm_rotation(ARM3, 0);
+          arm_set_sub_arm_rotation(ARM4, 0);
+          arm_set_sub_arm_rotation(ARM5, 0);
+          break;
+        case KEY_F:
+          printf("Reach Far\n");
+          arm_set_sub_arm_rotation(ARM1, 0);
+          arm_set_sub_arm_rotation(ARM2, -1.13);
+          arm_set_sub_arm_rotation(ARM3, -0.4);
+          arm_set_sub_arm_rotation(ARM4, -0.4);
+          arm_set_sub_arm_rotation(ARM5, 0);
+          gripper_release();
+          break;
+        case KEY_H:
+          printf("Reach High\n");
+          arm_set_sub_arm_rotation(ARM1, 0);
+          arm_set_sub_arm_rotation(ARM2, 0);
+          arm_set_sub_arm_rotation(ARM3, 0);
+          arm_set_sub_arm_rotation(ARM4, -1.57);
+          arm_set_sub_arm_rotation(ARM5, 0);
+          gripper_release();
+          break;
+        case KEY_I:
+          printf("Reach In-Front\n");
+          arm_set_sub_arm_rotation(ARM1, 0);
+          arm_set_sub_arm_rotation(ARM2, -0.5);
+          arm_set_sub_arm_rotation(ARM3, -1);
+          arm_set_sub_arm_rotation(ARM4, -1.57);
+          arm_set_sub_arm_rotation(ARM5, 0);
+          gripper_release();
+          break;
+        case KEY_C:
+          printf("Collect\n");
+          gripper_grip();
+          arm_set_sub_arm_rotation(ARM1, 0);
+          arm_set_sub_arm_rotation(ARM2, 0.5);
+          arm_set_sub_arm_rotation(ARM3, 0.5);
+          arm_set_sub_arm_rotation(ARM4, 1.6);
+          arm_set_sub_arm_rotation(ARM5, 1.57);
+          break;
+        case KEY_G:
+          printf("Grip\n");
+          gripper_grip();
+          break;
+        case KEY_R:
+          printf("Release\n");
+          gripper_release();
+          arm_reset();
+          break;
         case ' ':
           printf("Reset\n");
           base_reset();
           arm_reset();
           break;
-        case '+':
-        case 388:
-        case 65585:
-          printf("Grip\n");
-          gripper_grip();
-          break;
+        /*
         case '-':
-        case 390:
-          printf("Ungrip\n");
-          gripper_release();
-          break;
         case 332:
-        case WB_KEYBOARD_UP | WB_KEYBOARD_SHIFT:
-          printf("Increase arm height\n");
-          arm_increase_height();
-          break;
-        case 326:
-        case WB_KEYBOARD_DOWN | WB_KEYBOARD_SHIFT:
-          printf("Decrease arm height\n");
-          arm_decrease_height();
-          break;
-        case 330:
-        case WB_KEYBOARD_RIGHT | WB_KEYBOARD_SHIFT:
-          printf("Increase arm orientation\n");
-          arm_increase_orientation();
-          break;
-        case 328:
-        case WB_KEYBOARD_LEFT | WB_KEYBOARD_SHIFT:
-          printf("Decrease arm orientation\n");
-          arm_decrease_orientation();
-          break;
+        */
         default:
           fprintf(stderr, "Wrong keyboard input\n");
+          printf("%i\n",c);
           break;
       }
     }

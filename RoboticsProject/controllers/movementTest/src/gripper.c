@@ -18,12 +18,12 @@
  * Description:   Implement the functions defined in gripper.h
  */
 
-#include "gripper.h"
+#include <include/gripper.h>
 
 #include <webots/motor.h>
 #include <webots/robot.h>
 
-#include "tiny_math.h"
+#include <include/tiny_math.h>
 
 #define LEFT 0
 #define RIGHT 1
