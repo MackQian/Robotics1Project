@@ -18,7 +18,8 @@ RectangleArena {
   wallHeight 0.05
 }
 Transform {
-  translation 0 1 0
+  translation -1.17069 0.756438 1.74999
+  rotation 1 0 0 0
 }
 WoodenBox {
   translation -1.55 0.275 0.36
