@@ -1,8 +1,5 @@
-"""armController controller."""
 
-# You may need to import some classes of the controller module. Ex:
-#  from controller import Robot, Motor, DistanceSensor
-
+#fwd kin with PoE method
 def fwdkin(angles):
     x=np.array([1,0,0])
     y=np.array([0,1,0])
@@ -87,12 +84,4 @@ pos=gps.getValues()
 print("robot position: ",pos)
 print("from robot position to end effector",pot)
 print("end effect pos in world space",pot+pos)
-# You should insert a getDevice-like function in order to get the
-# instance of a device of the robot. Something like:
-#  motor = robot.getMotor('motorname')
-#  ds = robot.getDistanceSensor('dsname')
-#  ds.enable(timestep)
-# Main loop:
-# - perform simulation steps until Webots is stopping the controller
 
-# Enter here exit cleanup code.
