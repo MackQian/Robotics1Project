@@ -29,7 +29,7 @@ WoodenBox {
 WoodenBox {
   translation 0.22 0.125 -1.25
   name "wooden box(5)"
-  size 3 0.2 0.6
+  size 3.5 0.2 0.6
 }
 WoodenBox {
   translation -1.52 0.495 -1.25
