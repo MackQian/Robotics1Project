@@ -5,6 +5,7 @@
 from controller import Robot
 from controller import Keyboard
 import numpy as np
+import time
 from commands import *
 KEY_W=87
 KEY_A=65
@@ -13,10 +14,10 @@ KEY_D=68
 KEY_R=82
 KEY_H=72
 KEY_C=67
-KEY_Z=90
 KEY_G=71
 KEY_F=70
 KEY_I=73
+KEY_SPACE=32
 # create the Robot instance.
 robot = Robot()
 
@@ -32,7 +33,18 @@ def commands(i):
             KEY_A: rotate_left,
             KEY_S: rotate_backward,
             KEY_D: rotate_right,
-            Keyboard.UP: move_forward
+            KEY_H: reach_high,
+            KEY_F: reach_far,
+            KEY_I: reach_in_front,
+            KEY_G: grip,
+            KEY_C: collect,
+            KEY_R: release,
+            Keyboard.UP: move_forward,
+            Keyboard.DOWN: move_backward,
+            Keyboard.RIGHT: turn_right,
+            Keyboard.LEFT: turn_left,
+            KEY_SPACE: reset
+            
     }
     func=switcher.get(i,lambda:"Invalid Command")
     return func()

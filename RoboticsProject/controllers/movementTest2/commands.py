@@ -1,3 +1,6 @@
+import time
+from controller import Robot
+
 #initialize the arm
 def arm_init(robot):
     global joint1
@@ -33,6 +36,8 @@ def gripper_init(robot):
     finger2=robot.getMotor("finger2")
 #reach as far forward as possible
 def reach_far():
+    finger1.setPosition(0.025)
+    finger2.setPosition(0.025)
     joint1.setPosition(0)
     joint2.setPosition(-1.13)
     joint3.setPosition(-0.4)
@@ -40,6 +45,8 @@ def reach_far():
     joint5.setPosition(0)
 #reach as high as possible)
 def reach_high():
+    finger1.setPosition(0.025)
+    finger2.setPosition(0.025)
     joint1.setPosition(0)
     joint2.setPosition(0)
     joint3.setPosition(0)
@@ -47,6 +54,8 @@ def reach_high():
     joint5.setPosition(0)
 #for an object directly head
 def reach_in_front():
+    finger1.setPosition(0.025)
+    finger2.setPosition(0.025)
     joint1.setPosition(0)
     joint2.setPosition(-0.5)
     joint3.setPosition(-1)
@@ -110,3 +119,60 @@ def move_forward():
     wheel3.setVelocity(4.0)
     wheel4.setPosition(float('inf'))
     wheel4.setVelocity(4.0)
+#move the wheels backwards
+def move_backward():
+    wheel1.setPosition(float('inf'))
+    wheel1.setVelocity(-4.0)
+    wheel2.setPosition(float('inf'))
+    wheel2.setVelocity(-4.0)
+    wheel3.setPosition(float('inf'))
+    wheel3.setVelocity(-4.0)
+    wheel4.setPosition(float('inf'))
+    wheel4.setVelocity(-4.0)
+def turn_right():
+    wheel1.setPosition(float('inf'))
+    wheel1.setVelocity(-4.0)
+    wheel2.setPosition(float('inf'))
+    wheel2.setVelocity(4.0)
+    wheel3.setPosition(float('inf'))
+    wheel3.setVelocity(-4.0)
+    wheel4.setPosition(float('inf'))
+    wheel4.setVelocity(4.0)
+def turn_left():
+    wheel1.setPosition(float('inf'))
+    wheel1.setVelocity(4.0)
+    wheel2.setPosition(float('inf'))
+    wheel2.setVelocity(-4.0)
+    wheel3.setPosition(float('inf'))
+    wheel3.setVelocity(4.0)
+    wheel4.setPosition(float('inf'))
+    wheel4.setVelocity(-4.0)
+#reset wheels and arm
+def reset():
+    finger1.setPosition(0)
+    finger2.setPosition(0)
+    joint1.setPosition(0)
+    joint2.setPosition(0)
+    joint3.setPosition(0)
+    joint4.setPosition(0)
+    joint5.setPosition(0)
+    wheel1.setPosition(float('inf'))
+    wheel1.setVelocity(0)
+    wheel2.setPosition(float('inf'))
+    wheel2.setVelocity(0)
+    wheel3.setPosition(float('inf'))
+    wheel3.setVelocity(0)
+    wheel4.setPosition(float('inf'))
+    wheel4.setVelocity(0)
+def grip():
+    finger1.setPosition(0)
+    finger2.setPosition(0)
+def release():
+    finger1.setPosition(0.025)
+    finger2.setPosition(0.025)
+def collect():
+    joint1.setPosition(0)
+    joint2.setPosition(0.5)
+    joint3.setPosition(0.5)
+    joint4.setPosition(1.6)
+    joint5.setPosition(1.57)
