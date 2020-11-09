@@ -29,7 +29,7 @@ WoodenBox {
 WoodenBox {
   translation 0.22 0.125 -1.25
   name "wooden box(5)"
-  size 3.5 0.2 0.6
+  size 3 0.2 0.6
 }
 WoodenBox {
   translation -1.52 0.495 -1.25
@@ -116,7 +116,7 @@ WoodenBox {
 Youbot {
   translation -1.359729898493116 0.10193777049345197 1.7499940643352787
   rotation 0.9999993680079945 -0.0008260237261198519 0.0007626718925599744 -1.5708374065847532
-  controller "movementTest2"
+  controller "armTest"
   bodySlot [
     GPS {
     }
