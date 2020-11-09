@@ -25,6 +25,12 @@ def display_helper_message():
     print("Control commands:\n");
     print(" Arrows:       Move the robot\n");
     print(" WASD: Control the robot arm\n");
+    print(" F: Reach Far\n");
+    print(" H: Reach High\n");
+    print(" I: Reach In-Front\n");
+    print(" C: Collect\n");
+    print(" G: Grip\n");
+    print(" R: Release\n");
     print(" Space: Reset\n");
 
 def commands(i):
