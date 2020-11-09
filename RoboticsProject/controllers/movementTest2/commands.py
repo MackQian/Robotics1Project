@@ -135,18 +135,18 @@ def turn_right():
     wheel2.setPosition(float('inf'))
     wheel2.setVelocity(4.0)
     wheel3.setPosition(float('inf'))
-    wheel3.setVelocity(0)
+    wheel3.setVelocity(4.0)
     wheel4.setPosition(float('inf'))
-    wheel4.setVelocity(0)
+    wheel4.setVelocity(-4.0)
 def turn_left():
     wheel1.setPosition(float('inf'))
     wheel1.setVelocity(4.0)
     wheel2.setPosition(float('inf'))
     wheel2.setVelocity(-4.0)
     wheel3.setPosition(float('inf'))
-    wheel3.setVelocity(4)
+    wheel3.setVelocity(-4.0)
     wheel4.setPosition(float('inf'))
-    wheel4.setVelocity(0)
+    wheel4.setVelocity(4.0)
 #reset wheels and arm
 def reset():
     finger1.setPosition(0)
@@ -176,3 +176,9 @@ def collect():
     joint3.setPosition(0.5)
     joint4.setPosition(1.6)
     joint5.setPosition(1.57)
+def experiment():
+    joint1.setPosition(0)
+    joint2.setPosition(1.5708)
+    joint3.setPosition(0)
+    joint4.setPosition(0)
+    joint5.setPosition(0)

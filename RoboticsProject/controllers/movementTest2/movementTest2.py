@@ -17,6 +17,7 @@ KEY_C=67
 KEY_G=71
 KEY_F=70
 KEY_I=73
+KEY_E=69
 KEY_SPACE=32
 # create the Robot instance.
 robot = Robot()
@@ -45,6 +46,7 @@ def commands(i):
             KEY_G: grip,
             KEY_C: collect,
             KEY_R: release,
+            KEY_E: experiment,
             Keyboard.UP: move_forward,
             Keyboard.DOWN: move_backward,
             Keyboard.RIGHT: turn_right,
