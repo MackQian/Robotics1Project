@@ -109,7 +109,7 @@ def rotate_backward():
         joint4.setPosition(x-0.0567)
     else:
         joint4.setPosition(-1.78)
-
+#move the wheels forward
 def move_forward():
     wheel1.setPosition(float('inf'))
     wheel1.setVelocity(4.0)
@@ -129,7 +129,28 @@ def move_backward():
     wheel3.setVelocity(-4.0)
     wheel4.setPosition(float('inf'))
     wheel4.setVelocity(-4.0)
+#rotate the base to the right
 def turn_right():
+    wheel1.setPosition(float('inf'))
+    wheel1.setVelocity(-4.0)
+    wheel2.setPosition(float('inf'))
+    wheel2.setVelocity(4.0)
+    wheel3.setPosition(float('inf'))
+    wheel3.setVelocity(-4.0)
+    wheel4.setPosition(float('inf'))
+    wheel4.setVelocity(4.0)
+#turn the base to the left
+def turn_left():
+    wheel1.setPosition(float('inf'))
+    wheel1.setVelocity(4.0)
+    wheel2.setPosition(float('inf'))
+    wheel2.setVelocity(-4.0)
+    wheel3.setPosition(float('inf'))
+    wheel3.setVelocity(4.0)
+    wheel4.setPosition(float('inf'))
+    wheel4.setVelocity(-4.0)
+#slide the base to the right without turning
+def slide_right():
     wheel1.setPosition(float('inf'))
     wheel1.setVelocity(-4.0)
     wheel2.setPosition(float('inf'))
@@ -138,7 +159,8 @@ def turn_right():
     wheel3.setVelocity(4.0)
     wheel4.setPosition(float('inf'))
     wheel4.setVelocity(-4.0)
-def turn_left():
+#slide the base to the left without turning
+def slide_left():
     wheel1.setPosition(float('inf'))
     wheel1.setVelocity(4.0)
     wheel2.setPosition(float('inf'))
