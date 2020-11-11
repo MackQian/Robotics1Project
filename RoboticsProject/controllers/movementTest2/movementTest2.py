@@ -66,7 +66,7 @@ arm_init(robot)
 base_init(robot)
 
 keyboard=Keyboard()
-keyboard.enable(timestep)
+keyboard.enable(2*timestep)
 
 display_helper_message()
 while robot.step(timestep)!=-1:
