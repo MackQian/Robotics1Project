@@ -38,7 +38,6 @@ def gripper_init(robot):
 def reach_far():
     finger1.setPosition(0.025)
     finger2.setPosition(0.025)
-    joint1.setPosition(0)
     joint2.setPosition(-1.13)
     joint3.setPosition(-0.4)
     joint4.setPosition(-0.4)
@@ -47,16 +46,14 @@ def reach_far():
 def reach_high():
     finger1.setPosition(0.025)
     finger2.setPosition(0.025)
-    joint1.setPosition(0)
     joint2.setPosition(0)
     joint3.setPosition(0)
-    joint4.setPosition(-1.57)
+    joint4.setPosition(-1.37)
     joint5.setPosition(0)
 #for an object directly head
 def reach_in_front():
     finger1.setPosition(0.025)
     finger2.setPosition(0.025)
-    joint1.setPosition(0)
     joint2.setPosition(-0.5)
     joint3.setPosition(-1)
     joint4.setPosition(-1.57)
@@ -75,8 +72,8 @@ def rotate_right():
         joint1.setPosition(x-0.1)
     else:
         joint1.setPosition(-2.9496)
-#rotate the arm forwards
-def rotate_forward():
+#rotate the arm backward
+def rotate_backward():
     x=joint2.getTargetPosition()
     y=joint3.getTargetPosition()
     z=joint4.getTargetPosition()
@@ -92,8 +89,8 @@ def rotate_forward():
         joint4.setPosition(x+0.0567)
     else:
         joint4.setPosition(1.78)
-#rotate the arm backwards
-def rotate_backward():
+#rotate the arm forward
+def rotate_forward():
     x=joint2.getTargetPosition()
     y=joint3.getTargetPosition()
     z=joint4.getTargetPosition()
