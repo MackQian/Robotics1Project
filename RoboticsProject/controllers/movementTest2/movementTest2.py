@@ -18,6 +18,7 @@ KEY_G=71
 KEY_F=70
 KEY_I=73
 KEY_E=69
+KEY_X=88
 KEY_SPACE=32
 SHIFT_LEFT=65850
 SHIFT_RIGHT=65852
@@ -50,6 +51,7 @@ def commands(i):
             KEY_C: collect,
             KEY_R: release,
             KEY_E: experiment,
+            KEY_X: stop,
             SHIFT_RIGHT: slide_right,
             SHIFT_LEFT: slide_left,
             Keyboard.UP: move_forward,
