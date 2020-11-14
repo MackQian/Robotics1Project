@@ -4,6 +4,7 @@
 #  from controller import Robot, Motor, DistanceSensor
 from controller import Robot
 from controller import Keyboard
+from controller import Camera
 import numpy as np
 import time
 from commands import *
@@ -24,6 +25,11 @@ SHIFT_LEFT=65850
 SHIFT_RIGHT=65852
 # create the Robot instance.
 robot = Robot()
+
+timestep = int(robot.getBasicTimeStep())
+cam=robot.getCamera("camera")
+cam.enable(timestep)
+
 
 def display_helper_message():
     print("Control commands:\n");
@@ -79,6 +85,7 @@ display_helper_message()
 while robot.step(timestep)!=-1:
     key=keyboard.getKey()
     if(key!=-1):
+        x=cam.getImage()
         commands(key)
     
 # You should insert a getDevice-like function in order to get the
