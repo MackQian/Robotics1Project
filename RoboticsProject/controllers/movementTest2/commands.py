@@ -1,6 +1,6 @@
 import time
 from controller import Robot
-
+from controller import Keyboard
 #initialize the arm
 def arm_init(robot):
     global joint1

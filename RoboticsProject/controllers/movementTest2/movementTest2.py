@@ -64,7 +64,7 @@ def commands(i):
             Keyboard.DOWN: move_backward,
             Keyboard.RIGHT: turn_right,
             Keyboard.LEFT: turn_left,
-            KEY_SPACE: reset
+            KEY_SPACE: stop
             
     }
     func=switcher.get(i,lambda:"Invalid Command")
@@ -86,6 +86,7 @@ while robot.step(timestep)!=-1:
     key=keyboard.getKey()
     if(key!=-1):
         x=cam.getImage()
+        #print(x)
         commands(key)
     
 # You should insert a getDevice-like function in order to get the
