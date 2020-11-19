@@ -8,21 +8,9 @@ from controller import Camera
 import numpy as np
 import time
 from commands import *
-KEY_W=87
-KEY_A=65
-KEY_S=83
-KEY_D=68
-KEY_R=82
-KEY_H=72
-KEY_C=67
-KEY_G=71
-KEY_F=70
-KEY_I=73
-KEY_E=69
-KEY_X=88
-KEY_SPACE=32
-SHIFT_LEFT=65850
-SHIFT_RIGHT=65852
+#from commands2 import *
+from keys import *
+
 # create the Robot instance.
 robot = Robot()
 
@@ -64,11 +52,12 @@ def commands(i):
             Keyboard.DOWN: move_backward,
             Keyboard.RIGHT: turn_right,
             Keyboard.LEFT: turn_left,
-            KEY_SPACE: stop
+            KEY_SPACE: reset
             
     }
     func=switcher.get(i,lambda:"Invalid Command")
     return func()
+
 # get the time step of the current world.
 timestep = int(robot.getBasicTimeStep())
 

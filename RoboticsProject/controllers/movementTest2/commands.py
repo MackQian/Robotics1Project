@@ -166,7 +166,7 @@ def slide_left():
     wheel3.setVelocity(-4.0)
     wheel4.setPosition(float('inf'))
     wheel4.setVelocity(4.0)
-#reset wheels and arm
+#reset the arm
 def reset():
     finger1.setPosition(0)
     finger2.setPosition(0)
@@ -175,14 +175,7 @@ def reset():
     joint3.setPosition(0)
     joint4.setPosition(0)
     joint5.setPosition(0)
-    wheel1.setPosition(float('inf'))
-    wheel1.setVelocity(0)
-    wheel2.setPosition(float('inf'))
-    wheel2.setVelocity(0)
-    wheel3.setPosition(float('inf'))
-    wheel3.setVelocity(0)
-    wheel4.setPosition(float('inf'))
-    wheel4.setVelocity(0)
+    
 def stop():
     wheel1.setPosition(float('inf'))
     wheel1.setVelocity(0)
