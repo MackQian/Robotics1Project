@@ -5,7 +5,7 @@ sceneTreePerspectives: 000000ff0000000100000002000006100000016701000000060100000
 maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
-textFiles: 3 "controllers/cameraTest/cameraTest.py" "controllers/movementTest2/movementTest2.py" "controllers/cameraTest2/cameraTest2.py" "controllers/movementTest2/commands2.py" "controllers/movementTest2/commands.py"
+textFiles: 3 "controllers/cameraTest/cameraTest.py" "controllers/movementTest2/movementTest2.py" "controllers/cameraTest2/cameraTest2.py" "controllers/movementTest2/movement_commands.py"
 consoles: Console:All:All
 consoles: Console:All:All
 renderingDevicePerspectives: youBot:camera;0;7.51563;0;0

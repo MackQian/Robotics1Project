@@ -185,12 +185,15 @@ def stop():
     wheel3.setVelocity(0)
     wheel4.setPosition(float('inf'))
     wheel4.setVelocity(0)
+#Grip with the grabber
 def grip():
     finger1.setPosition(0)
     finger2.setPosition(0)
+#release the grabber's grip
 def release():
     finger1.setPosition(0.025)
     finger2.setPosition(0.025)
+#place gripped object over table
 def collect():
     joint1.setPosition(0)
     joint2.setPosition(0.5)

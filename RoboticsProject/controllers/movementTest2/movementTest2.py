@@ -7,7 +7,7 @@ from controller import Keyboard
 from controller import Camera
 import numpy as np
 import time
-from commands import *
+from movement_commands import *
 #from commands2 import *
 from keys import *
 
