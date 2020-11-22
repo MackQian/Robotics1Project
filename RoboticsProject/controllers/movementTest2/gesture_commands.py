@@ -2,7 +2,7 @@ import time
 from controller import Robot
 from controller import Keyboard
 from keys import *
-from commands import *
+from movement_commands import *
 
 #commands with zero fingers
 def command0(key):

@@ -13,11 +13,6 @@ def arm_init(robot):
     joint3=robot.getMotor("arm3")
     joint4=robot.getMotor("arm4")
     joint5=robot.getMotor("arm5")
-    joint1.setPosition(0)
-    joint2.setPosition(0)
-    joint3.setPosition(0)
-    joint4.setPosition(0)
-    joint5.setPosition(0)
 #initialize the base
 def base_init(robot):
     global wheel1
