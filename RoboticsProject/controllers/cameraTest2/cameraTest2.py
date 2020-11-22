@@ -5,6 +5,7 @@
 from controller import Robot
 import cv2
 import numpy as np
+#install with pip install scikit-image
 from skimage.measure import compare_ssim
 import math
 KEY_F=70
@@ -18,6 +19,8 @@ timestep = int(robot.getBasicTimeStep())
 #  motor = robot.getMotor('motorname')
 #  ds = robot.getDistanceSensor('dsname')
 #  ds.enable(timestep)
+
+#recalibrates the background
 def noiseCalibrate(cap,rob,bbLC,bbRC):
     diffPercent=0
     for i in range(30):
@@ -28,6 +31,7 @@ def noiseCalibrate(cap,rob,bbLC,bbRC):
         diffPercent+=score
     diffPercent/=30
     return diffPercent-.03
+
 cap = cv2.VideoCapture(0)
 bbLC=(0,0)
 bbRC=(300,300)
@@ -40,16 +44,22 @@ rob=cv2.cvtColor(rob,cv2.COLOR_BGR2GRAY)
 diffPercent=noiseCalibrate(cap,rob,bbLC,bbRC)
 
 while True:
+    #gets top left corner of frame
     ret,frame=cap.read()
     roi=frame[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
     roi2=cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)
     (score,diff)=compare_ssim(rob,roi2,full=True)
     cv2.rectangle(frame,bbLC,bbRC,(0,255,0),0)
-    print(score," ",diffPercent)
+    #print(score," ",diffPercent)
+    #if the image is different enough...
     if score<diffPercent:
+        #get the image difference
         diff = (diff * 255).astype("uint8")
+        #apply the OPEN morph to reduce noise
         diff = cv2.morphologyEx(diff,cv2.MORPH_OPEN,kernel)
-        th= cv2.threshold(diff, 128, 255, cv2.THRESH_TOZERO_INV| cv2.THRESH_OTSU)[1]
+        #threshold the image to get a more solid hand
+        th= cv2.threshold(diff, 128, 255, cv2.THRESH_BINARY_INV| cv2.THRESH_OTSU)[1]
+        #visualization stuff
         contours = cv2.findContours(th.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         contours = contours[0] if len(contours) == 2 else contours[1]
         mask = np.zeros(roi.shape, dtype='uint8')
@@ -57,6 +67,7 @@ while True:
             area = cv2.contourArea(c)
             if area > 40:
                 cv2.drawContours(mask, [c], 0, (0,255,0), -1)
+        #hand contours, later going to be use for convex deformities for finger detection
         contours1, hierarchy = cv2.findContours(th, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         contours1 = max(contours1, key=lambda x: cv2.contourArea(x))
         cv2.drawContours(frame, [contours1], -1, (255,255,0), 2)
