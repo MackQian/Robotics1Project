@@ -15,25 +15,25 @@ import math
 KEY_F=70
 def display_helper_message():
     print("Gesture commands:\n");
-    print(" 0 Fingers + F: Grip\n");
-    print(" 0 Fingers + G: Reset\n");
-    print(" 0 Fingers:     Stop\n");
+    print(" 0 Fingers + W: Reset\n");
+    print(" 0 Fingers + S:     Stop\n\n");
     
-    print(" 2 Finger + F:  Collect\n");
-    print(" 2 Finger + G:  Rotate Forward\n");
-    print(" 2 Finger:      Move Forward\n");
+    print(" 2 Finger + W:  Move Forward\n");
+    print(" 2 Finger + S:  Move Backward\n");
+    print(" 2 Finger + A:  Turn Left\n");
+    print(" 2 Finger + D:  Turn Right\n\n");
     
-    print(" 3 Fingers + F: Release\n");
-    print(" 3 Fingers + G: Rotate Backward\n");
-    print(" 3 Fingers:     Move Forward\n");
+    print(" 3 Finger + W:  Rotate Forward\n");
+    print(" 3 Finger + S:  Rotate Backward\n");
+    print(" 3 Finger + A:  Rotate Left\n");
+    print(" 3 Finger + D:  Rotate Right\n\n");
     
-    print(" 4 Fingers + F: Reach Far\n");
-    print(" 4 Fingers + G: Rotate_Left\n");
-    print(" 4 Fingers:     Turn Left\n");
+    print(" 4 Fingers + W: Reach Far\n");
+    print(" 4 Fingers + S: Reach High\n\n");
     
-    print(" 5 Fingers + F: Reach High\n");
-    print(" 5 Fingers + G: Rotate Right\n");
-    print(" 5 Fingers:     Turn Right\n");
+    print(" 5 Fingers + W: Grip\n");
+    print(" 5 Fingers + S: Release\n");
+    print(" 5 Fingers + Space: Collect\n\n");
 # create the Robot instance.
 robot = Robot()
 

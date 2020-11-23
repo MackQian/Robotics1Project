@@ -6,56 +6,56 @@ from movement_commands import *
 
 #commands with zero or one finger(s)
 def command0(key):
-    #close the fingers
-    if key==KEY_F:
-        grip()
-    #reset the arm
-    elif key==KEY_G:
+    if key==KEY_W:
         reset()
-    #stop the wheels
-    else:
+    #stop moving the wheels
+    elif kay==KEY_S:
         stop()
-#commands with two finger
+#commands with two fingers
 def command2(key):
-    #collect the item
-    if key==KEY_F:
-        collect()
-    #move the arm forward
-    elif key==KEY_G:
-        rotate_forward()
-    #move the wheels forward
-    else:
+    #move base forward
+    if key==KEY_W:
         move_forward()
+    #move base backward
+    elif key==KEY_S:
+        move_backward()
+    #turn base left
+    elif key==KEY_A:
+        turn_left()
+    #turn the base right
+    elif key==KEY_D:
+        turn_right()
 #commands with three fingers
 def command3(key):
-    #release the item
-    if key==KEY_F:
-        release()
-    #move the arm backward
-    elif key==KEY_G:
+    #rotate the arm forward
+    if key==KEY_W:
+        rotate_forward()
+    #rotate the arm backward
+    elif key==KEY_S:
         rotate_backward()
-    #move the wheels backward
-    else:
-        move_backward()
+    #rotate the arm left
+    elif key==KEY_A:
+        rotate_left()
+    #rotate the arm right
+    elif key==KEY_D:
+        rotate_right()
 #commands with four fingers
 def command4(key):
     #reach far
-    if key==KEY_F:
+    if key==KEY_W:
         reach_far()
-    #turn the arm left
-    elif key==KEY_G:
-        rotate_left()
-    #turn the wheels left
-    else:
-        turn_left()
+    #reach high
+    elif key==KEY_S:
+        reach_high()
 #commands with five fingers
 def command5(key):
-    if key==KEY_F:
-        reach_high()
-    #turn the arm right
-    elif key==KEY_G:
-        rotate_right()
-    #turn the wheels right
-    else:
-        turn_right()
+    #grip an object
+    if key==KEY_W:
+        grip()
+    #release grip
+    elif key==KEY_S:
+        release()
+    #put object over platform
+    elif key==KEY_SPACE:
+        collect()
 
