@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 #install with pip install scikit-image
 from skimage.measure import compare_ssim
+
 import math
 KEY_F=70
 # create the Robot instance.
@@ -26,79 +27,92 @@ def noiseCalibrate(cap,rob,bbLC,bbRC):
     for i in range(30):
         ret,frame=cap.read()
         roi=frame[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
-        roi2=cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)
-        (score,diff)=compare_ssim(rob,roi2,full=True)
+        (score,diff)=compare_ssim(rob,roi,full=True,multichannel=True)
         diffPercent+=score
     diffPercent/=30
     return diffPercent-.03
-
+#get camera device
 cap = cv2.VideoCapture(0)
+
 bbLC=(0,0)
 bbRC=(300,300)
-
+textOrg=(20,50)
 kernel=np.ones((5,5),np.uint8)
+
 dontcare,temp=cap.read()
 rob=temp[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
-rob=cv2.cvtColor(rob,cv2.COLOR_BGR2GRAY)
 
+#compute mean image difference so code doesnt pick up noise
 diffPercent=noiseCalibrate(cap,rob,bbLC,bbRC)
 
-while True:
-    #gets top left corner of frame
+
+#accesss this var to get the gesture
+#CURRENTLY 1 FINGER UP and 0 FINGERS ARE IDENTICAL
+#FOR BEST RESULTS USE WITH CONTRAST BACKGROUND TO HAND
+fingerCount=0
+
+while robot.step(timestep) != -1:
     ret,frame=cap.read()
     roi=frame[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
-    roi2=cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)
-    (score,diff)=compare_ssim(rob,roi2,full=True)
+    (score,diff)=compare_ssim(rob,roi,full=True,multichannel=True)
     cv2.rectangle(frame,bbLC,bbRC,(0,255,0),0)
-    #print(score," ",diffPercent)
-    #if the image is different enough...
-    if score<diffPercent:
-        #get the image difference
+    #if the new frame is different enough from the background, run the following...
+    if(score<diffPercent):
+        #get the difference matrix into an image
         diff = (diff * 255).astype("uint8")
-        #apply the OPEN morph to reduce noise
+        #reduces noise
         diff = cv2.morphologyEx(diff,cv2.MORPH_OPEN,kernel)
-        #threshold the image to get a more solid hand
-        th= cv2.threshold(diff, 128, 255, cv2.THRESH_BINARY_INV| cv2.THRESH_OTSU)[1]
-        #visualization stuff
-        contours = cv2.findContours(th.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        contours = contours[0] if len(contours) == 2 else contours[1]
-        mask = np.zeros(roi.shape, dtype='uint8')
-        for c in contours:
-            area = cv2.contourArea(c)
-            if area > 40:
-                cv2.drawContours(mask, [c], 0, (0,255,0), -1)
-        #hand contours, later going to be use for convex deformities for finger detection
-        contours1, hierarchy = cv2.findContours(th, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        contours1 = max(contours1, key=lambda x: cv2.contourArea(x))
-        cv2.drawContours(frame, [contours1], -1, (255,255,0), 2)
+        #conv to grayscale
+        diff = cv2.cvtColor(diff,cv2.COLOR_BGR2GRAY)
+        #more noise reduction/ fills in gaps on the hand
+        diff = cv2.GaussianBlur(diff,(5,5),100)
+        #convert into binary image, extracts hand shape basically
+        th= cv2.threshold(diff, 0, 255, cv2.THRESH_BINARY_INV| cv2.THRESH_OTSU)[1]
+        #compute contours of the hand
+        cnt, hierarchy = cv2.findContours(th, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        cnt = max(cnt, key=lambda x: cv2.contourArea(x))
+        cv2.drawContours(frame, [cnt], -1, (255,255,0), 2)
+        #compute convex hull and find defects to find finger gaps
+        hull = cv2.convexHull(cnt,returnPoints = False)
+        defects = cv2.convexityDefects(cnt,hull)
+        #source: https://medium.com/analytics-vidhya/hand-detection-and-finger-counting-using-opencv-python-5b594704eb08
+        if defects is not None:
+            count=0
+            for i in range(defects.shape[0]):
+                s,e,f,d = defects[i,0]
+                start = tuple(cnt[s][0])
+                end = tuple(cnt[e][0])
+                far = tuple(cnt[f][0])
+                cv2.line(frame,start,end,[0,255,0],2)
+                #compute triangle from the contour
+                a = np.sqrt((end[0] - start[0]) ** 2 + (end[1] - start[1]) ** 2)
+                b = np.sqrt((far[0] - start[0]) ** 2 + (far[1] - start[1]) ** 2)
+                c = np.sqrt((end[0] - far[0]) ** 2 + (end[1] - far[1]) ** 2)
+                angle = np.arccos((b ** 2 + c ** 2 - a ** 2) / (2 * b * c))
+                if angle <= np.pi/2:  # angle less than 90 degree, treat as finger gaps
+                    count += 1
+                    cv2.line(frame,start,far,[255,0,0],2)
+                    cv2.line(frame,far,end,[255,0,0],2)
+                    cv2.circle(frame, far, 4, [0, 0, 255], -1)
+            if count > 0:
+              count = count+1
+            fingerCount=count
+            cv2.putText(frame, str(fingerCount), textOrg,cv2.FONT_HERSHEY_SIMPLEX,1,[255,255,255])
     else:
-        mask = np.zeros(roi.shape, dtype='uint8')
         th = np.zeros(roi.shape, dtype='uint8')
+    
     cv2.imshow('diff',diff)
-    cv2.imshow('thresh',th)
-    cv2.imshow('frame2',frame)
-    cv2.imshow('sanitized',mask)
+    cv2.imshow('sanitized',th)
+    cv2.imshow('Frame',frame)
     if(cv2.waitKey(1) & 0xFF == ord('q')):
         break
+    #USE THIS TO RECALIBRATE THE BACKGROUND, kinda buggy, hold down R until camera freezes
     if (cv2.waitKey(1) & 0xFF == ord('r')):
         dontcare,temp=cap.read()
         rob=temp[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
-        rob=cv2.cvtColor(rob,cv2.COLOR_BGR2GRAY)
         diffPercent=noiseCalibrate(cap,rob,bbLC,bbRC)
+        bkgrem=cv2.bgsegm.createBackgroundSubtractorGSOC(replaceRate=0,propagationRate=0)
 cap.release()
 cv2.destroyAllWindows()
-
-# Main loop:
-# - perform simulation steps until Webots is stopping the controller
-while robot.step(timestep) != -1:
-    # Read the sensors:
-    # Enter here functions to read sensor data, like:
-    #  val = ds.getValue()
-
-    # Process sensor data here.
-
-    # Enter here functions to send actuator commands, like:
-    #  motor.setPosition(10.0)
-    pass
 
 # Enter here exit cleanup code.
