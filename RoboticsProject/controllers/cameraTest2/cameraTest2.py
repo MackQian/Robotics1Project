@@ -48,7 +48,7 @@ diffPercent=noiseCalibrate(cap,rob,bbLC,bbRC)
 
 #accesss this var to get the gesture
 #CURRENTLY 1 FINGER UP and 0 FINGERS ARE IDENTICAL
-#FOR BEST RESULTS USE WITH CONTRAST BACKGROUND TO HAND
+#FOR BEST RESULTS USE WITH CONTRASTED BACKGROUND TO HAND
 fingerCount=0
 
 while robot.step(timestep) != -1:
@@ -75,7 +75,8 @@ while robot.step(timestep) != -1:
         #compute convex hull and find defects to find finger gaps
         hull = cv2.convexHull(cnt,returnPoints = False)
         defects = cv2.convexityDefects(cnt,hull)
-        #source: https://medium.com/analytics-vidhya/hand-detection-and-finger-counting-using-opencv-python-5b594704eb08
+        #sources: https://medium.com/analytics-vidhya/hand-detection-and-finger-counting-using-opencv-python-5b594704eb08
+        #https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_contours/py_contours_more_functions/py_contours_more_functions.html
         if defects is not None:
             count=0
             for i in range(defects.shape[0]):
@@ -83,16 +84,21 @@ while robot.step(timestep) != -1:
                 start = tuple(cnt[s][0])
                 end = tuple(cnt[e][0])
                 far = tuple(cnt[f][0])
+                #draw hull
                 cv2.line(frame,start,end,[0,255,0],2)
                 #compute triangle from the contour
                 a = np.sqrt((end[0] - start[0]) ** 2 + (end[1] - start[1]) ** 2)
                 b = np.sqrt((far[0] - start[0]) ** 2 + (far[1] - start[1]) ** 2)
                 c = np.sqrt((end[0] - far[0]) ** 2 + (end[1] - far[1]) ** 2)
                 angle = np.arccos((b ** 2 + c ** 2 - a ** 2) / (2 * b * c))
+                #this step cleans up the small defects, since the finger gaps are
+                #much larger than any other ones
                 if angle <= np.pi/2:  # angle less than 90 degree, treat as finger gaps
                     count += 1
+                    #draw fingers
                     cv2.line(frame,start,far,[255,0,0],2)
                     cv2.line(frame,far,end,[255,0,0],2)
+                    #finger gap point
                     cv2.circle(frame, far, 4, [0, 0, 255], -1)
             if count > 0:
               count = count+1
