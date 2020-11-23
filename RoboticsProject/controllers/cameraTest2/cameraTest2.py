@@ -13,6 +13,27 @@ from skimage.measure import compare_ssim
 
 import math
 KEY_F=70
+def display_helper_message():
+    print("Gesture commands:\n");
+    print(" 0 Fingers + F: Grip\n");
+    print(" 0 Fingers + G: Reset\n");
+    print(" 0 Fingers:     Stop\n");
+    
+    print(" 2 Finger + F:  Collect\n");
+    print(" 2 Finger + G:  Rotate Forward\n");
+    print(" 2 Finger:      Move Forward\n");
+    
+    print(" 3 Fingers + F: Release\n");
+    print(" 3 Fingers + G: Rotate Backward\n");
+    print(" 3 Fingers:     Move Forward\n");
+    
+    print(" 4 Fingers + F: Reach Far\n");
+    print(" 4 Fingers + G: Rotate_Left\n");
+    print(" 4 Fingers:     Turn Left\n");
+    
+    print(" 5 Fingers + F: Reach High\n");
+    print(" 5 Fingers + G: Rotate Right\n");
+    print(" 5 Fingers:     Turn Right\n");
 # create the Robot instance.
 robot = Robot()
 
@@ -52,12 +73,18 @@ diffPercent=noiseCalibrate(cap,rob,bbLC,bbRC)
 gripper_init(robot)
 arm_init(robot)
 base_init(robot)
+keyboard=Keyboard()
+keyboard.enable(2*timestep)
+#display commands
+display_helper_message()
 #accesss this var to get the gesture
 #CURRENTLY 1 FINGER UP and 0 FINGERS ARE IDENTICAL
 #FOR BEST RESULTS USE WITH CONTRASTED BACKGROUND TO HAND
 fingerCount=0
-keyboard=Keyboard()
-keyboard.enable(2*timestep)
+prevCount=0
+key=keyboard.getKey()
+prevkey=0
+
 while robot.step(timestep) != -1:
 
     ret,frame=cap.read()
@@ -110,6 +137,7 @@ while robot.step(timestep) != -1:
                     cv2.circle(frame, far, 4, [0, 0, 255], -1)
             if count > 0:
               count = count+1
+            prevCount=fingerCount
             fingerCount=count
             cv2.putText(frame, str(fingerCount), textOrg,cv2.FONT_HERSHEY_SIMPLEX,1,[255,255,255])
     else:
@@ -118,13 +146,19 @@ while robot.step(timestep) != -1:
     cv2.imshow('diff',diff)
     cv2.imshow('sanitized',th)
     cv2.imshow('Frame',frame)
-    
+    prevkey=key
     key=keyboard.getKey()
-    print(key)
-    if fingerCount==5:
+    if fingerCount==5 and (prevCount!=fingerCount or prevkey!=key):
         command5(key)
-    else:
+    elif fingerCount==4 and (prevCount!=fingerCount or prevkey!=key):
+        command4(key)
+    elif fingerCount==3 and (prevCount!=fingerCount or prevkey!=key):
+        command3(key)
+    elif fingerCount==2 and (prevCount!=fingerCount or prevkey!=key):
+        command2(key)
+    elif fingerCount==0 and (prevCount!=fingerCount or prevkey!=key):
         command0(key)
+    
     if(cv2.waitKey(1) & 0xFF == ord('q')):
         break
     #USE THIS TO RECALIBRATE THE BACKGROUND, kinda buggy, hold down R until camera freezes
