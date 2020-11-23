@@ -9,7 +9,7 @@ def command0(key):
     if key==KEY_W:
         reset()
     #stop moving the wheels
-    elif kay==KEY_S:
+    elif key==KEY_S:
         stop()
 #commands with two fingers
 def command2(key):

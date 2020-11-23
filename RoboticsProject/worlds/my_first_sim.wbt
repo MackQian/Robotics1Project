@@ -156,7 +156,7 @@ BiscuitBox {
   size 0.12 0.03 0.05
 }
 BiscuitBox {
-  translation 0.32 0.234922 1.76
+  translation 0.32 0.234922 1.66
   rotation -1.8412296392221332e-06 -0.7071067811853496 0.7071067811853482 -3.1415889711491682
   name "biscuit box(2)"
   size 0.12 0.03 0.05
