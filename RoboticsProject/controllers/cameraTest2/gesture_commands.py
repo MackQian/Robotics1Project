@@ -5,12 +5,12 @@ from keys import *
 from movement_commands import *
 
 #commands with zero or one finger(s)
-def command0(k):
+def command0(key):
     #close the fingers
-    if k==KEY_F:
+    if key==Keyboard.ALT:
         grip()
     #reset the arm
-    elif k==KEY_G:
+    elif key==Keyboard.SHIFT:
         reset()
     #stop the wheels
     else:
@@ -18,10 +18,10 @@ def command0(k):
 #commands with two finger
 def command2(key):
     #collect the item
-    if key==KEY_F:
+    if key==Keyboard.ALT:
         collect()
     #move the arm forward
-    elif key==KEY_G:
+    elif key==Keyboard.SHIFT:
         rotate_forward()
     #move the wheels forward
     else:
@@ -29,10 +29,10 @@ def command2(key):
 #commands with three fingers
 def command3(key):
     #release the item
-    if key==KEY_F:
+    if key==Keyboard.ALT:
         release()
     #move the arm backward
-    elif key==KEY_G:
+    elif key==Keyboard.SHIFT:
         rotate_backward()
     #move the wheels backward
     else:
@@ -40,25 +40,22 @@ def command3(key):
 #commands with four fingers
 def command4(key):
     #reach far
-    if key==KEY_F:
+    if key==Keyboard.ALT:
         reach_far()
     #turn the arm left
-    elif key==KEY_G:
+    elif key==Keyboard.SHIFT:
         rotate_left()
     #turn the wheels left
     else:
         turn_left()
 #commands with five fingers
-def command5(k):
-    if k==KEY_F:
-        print("reach_high")
+def command5(key):
+    if key==Keyboard.ALT:
         reach_high()
     #turn the arm right
-    elif k==KEY_G:
-        print("rotate_right")
+    elif key==Keyboard.SHIFT:
         rotate_right()
     #turn the wheels right
     else:
-        print("turn_right")
         turn_right()
 

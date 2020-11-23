@@ -140,7 +140,7 @@ WoodenBox {
 Youbot {
   translation -1.35973 0.101937 1.65999
   rotation 0.9999993680079945 -0.0008260237261198519 0.0007626718925599744 -1.5708374065847532
-  controller "movementTest2"
+  controller "cameraTest2"
   bodySlot [
     GPS {
     }

@@ -5,6 +5,9 @@
 from controller import Robot
 import cv2
 import numpy as np
+from controller import Keyboard
+from movement_commands import *
+from gesture_commands import *
 #install with pip install scikit-image
 from skimage.measure import compare_ssim
 
@@ -45,13 +48,18 @@ rob=temp[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
 #compute mean image difference so code doesnt pick up noise
 diffPercent=noiseCalibrate(cap,rob,bbLC,bbRC)
 
-
+#initialize the robot
+gripper_init(robot)
+arm_init(robot)
+base_init(robot)
 #accesss this var to get the gesture
 #CURRENTLY 1 FINGER UP and 0 FINGERS ARE IDENTICAL
 #FOR BEST RESULTS USE WITH CONTRASTED BACKGROUND TO HAND
 fingerCount=0
-
+keyboard=Keyboard()
+keyboard.enable(2*timestep)
 while robot.step(timestep) != -1:
+
     ret,frame=cap.read()
     roi=frame[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
     (score,diff)=compare_ssim(rob,roi,full=True,multichannel=True)
@@ -92,7 +100,7 @@ while robot.step(timestep) != -1:
                 c = np.sqrt((end[0] - far[0]) ** 2 + (end[1] - far[1]) ** 2)
                 angle = np.arccos((b ** 2 + c ** 2 - a ** 2) / (2 * b * c))
                 #this step cleans up the small defects, since the finger gaps are
-                #much larger than any other ones
+                #much larger than any other onesf
                 if angle <= np.pi/2:  # angle less than 90 degree, treat as finger gaps
                     count += 1
                     #draw fingers
@@ -110,6 +118,13 @@ while robot.step(timestep) != -1:
     cv2.imshow('diff',diff)
     cv2.imshow('sanitized',th)
     cv2.imshow('Frame',frame)
+    
+    key=keyboard.getKey()
+    print(key)
+    if fingerCount==5:
+        command5(key)
+    else:
+        command0(key)
     if(cv2.waitKey(1) & 0xFF == ord('q')):
         break
     #USE THIS TO RECALIBRATE THE BACKGROUND, kinda buggy, hold down R until camera freezes
