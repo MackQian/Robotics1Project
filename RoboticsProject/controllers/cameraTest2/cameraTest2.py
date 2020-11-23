@@ -30,6 +30,8 @@ def display_helper_message():
     
     print(" 4 Fingers + W: Reach Far\n");
     print(" 4 Fingers + S: Reach High\n\n");
+    print(" 4 Fingers + A: Slide Left\n");
+    print(" 4 Fingers + D: Slide Right\n\n");
     
     print(" 5 Fingers + W: Grip\n");
     print(" 5 Fingers + S: Release\n");

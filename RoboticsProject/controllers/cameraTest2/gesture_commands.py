@@ -47,6 +47,12 @@ def command4(key):
     #reach high
     elif key==KEY_S:
         reach_high()
+    #slide left
+    elif key==KEY_A:
+        slide_left()
+    #slide right
+    elif key==KEY_D:
+        slide_right()
 #commands with five fingers
 def command5(key):
     #grip an object
