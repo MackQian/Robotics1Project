@@ -28,8 +28,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.9817711759782539 -0.179382299906695 -0.0628279276950988 5.831241565987331
-  position 0.22064182979252678 2.2790836968917967 4.741453221350358
+  orientation 0.9911181165058557 0.1281753280198604 0.035439588328392974 5.536031983122449
+  position -0.7342269439945803 6.094607098440287 6.940326401252433
 }
 TexturedBackground {
 }
@@ -51,12 +51,12 @@ WoodenBox {
   size 0.4 0.55 0.6
 }
 WoodenBox {
-  translation -0.56 0.125 -1.25
+  translation -0.56 0.125 -1.4
   name "wooden box(5)"
   size 1.4 0.2 0.6
 }
 WoodenBox {
-  translation -1.52 0.495 -1.25
+  translation -1.52 0.495 -1.4
   name "wooden box(4)"
   size 0.4 1 0.6
 }
@@ -65,17 +65,17 @@ WoodenBox {
   size 1 0.2 0.5
 }
 WoodenBox {
-  translation -0.27 0.08 -0.24
+  translation 0.48 0.08 -0.27
   name "wooden box(2)"
-  size 1 0.15 0.5
+  size 2.5 0.15 0.5
 }
 WoodenBox {
-  translation -0.27 0.11 -2.4
+  translation -0.35 0.11 -2.34
   name "wooden box(6)"
-  size 1 0.2 0.5
+  size 1 0.2 1.3
 }
 Solid {
-  translation 0.94 0.03 -1.24
+  translation 0.94 0.03 -1.39
   rotation 9.58979e-09 1 -5.06897e-15 3.14159
   scale 0.3 0.3 0.3
   children [
@@ -128,14 +128,14 @@ Solid {
   boundingObject USE RAMP
 }
 RubberDuck {
-  translation -1.4079766895115091 1.0154690091024332 -0.9950431688408691
+  translation -1.40768 1.01547 -1.14504
   rotation 7.124043348679607e-13 1 4.310580035899488e-14 -0.0017674182505884777
 }
 WoodenBox {
-  translation 0.27 0.11 1.49
+  translation 0.27 0.11 0.99
   rotation 0 1 0 -1.5707953071795862
   name "wooden box(1)"
-  size 1 0.2 0.7
+  size 2 0.2 0.7
 }
 Youbot {
   translation -1.35973 0.101937 1.65999
@@ -151,7 +151,7 @@ Youbot {
   ]
 }
 BiscuitBox {
-  translation -0.26 0.185 -0.1
+  translation -0.26 0.185 -0.13
   rotation 0.5773496252796477 -0.5773505911443458 0.5773505911443452 2.0943960682584306
   size 0.12 0.03 0.05
 }
