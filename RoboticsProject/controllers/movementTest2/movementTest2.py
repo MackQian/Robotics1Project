@@ -45,14 +45,14 @@ def commands(i):
             KEY_C: collect,
             KEY_R: release,
             KEY_E: experiment,
-            KEY_X: stop,
+            KEY_X: reset,
             SHIFT_RIGHT: slide_right,
             SHIFT_LEFT: slide_left,
             Keyboard.UP: move_forward,
             Keyboard.DOWN: move_backward,
             Keyboard.RIGHT: turn_right,
             Keyboard.LEFT: turn_left,
-            KEY_SPACE: reset
+            KEY_SPACE: stop
             
     }
     func=switcher.get(i,lambda:"Invalid Command")

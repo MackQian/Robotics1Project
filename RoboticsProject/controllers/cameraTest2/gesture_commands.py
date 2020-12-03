@@ -64,4 +64,6 @@ def command5(key):
     #put object over platform
     elif key==KEY_SPACE:
         collect()
+    elif key==KEY_A:
+        reach_in_front()
 
