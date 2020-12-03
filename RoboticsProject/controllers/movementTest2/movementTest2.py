@@ -5,6 +5,7 @@
 from controller import Robot
 from controller import Keyboard
 from controller import Camera
+from controller import TouchSensor
 import numpy as np
 import time
 from movement_commands import *
@@ -71,7 +72,18 @@ keyboard=Keyboard()
 keyboard.enable(2*timestep)
 
 display_helper_message()
+old_position = gps.getValues()
+counts = 0
 while robot.step(timestep)!=-1:
+    new_position = gps.getValues()
+    if (counts == 10):
+        commands(KEY_SPACE)
+        counts = 0
+    if (abs(old_position[0] - new_position[0]) < 0.001 and abs(old_position[1] - new_position[1]) < 0.001 and abs(old_position[2] - new_position[2]) < 0.001):
+        counts += 1
+    else:
+        counts = 0
+    old_position = new_position
     key=keyboard.getKey()
     if(key!=-1):
         x=cam.getImage()
