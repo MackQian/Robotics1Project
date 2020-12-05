@@ -28,14 +28,15 @@ def display_helper_message():
     print(" 3 Finger + A:  Rotate Left\n");
     print(" 3 Finger + D:  Rotate Right\n\n");
     
-    print(" 4 Fingers + W: Reach Far\n");
-    print(" 4 Fingers + S: Reach High\n\n");
+    print(" 4 Fingers + W: Grip\n");
+    print(" 4 Fingers + S: Release\n\n");
     print(" 4 Fingers + A: Slide Left\n");
     print(" 4 Fingers + D: Slide Right\n\n");
     
-    print(" 5 Fingers + W: Grip\n");
-    print(" 5 Fingers + S: Release\n");
-    print(" 5 Fingers + Space: Collect\n\n");
+    print(" 5 Fingers + W: Reach Far\n");
+    print(" 5 Fingers + S: Reach In-Front\n");
+    print(" 5 Fingers + A: Reach High\n\n");
+    print(" 5 Fingers + D: Collect\n");
 # create the Robot instance.
 robot = Robot()
 

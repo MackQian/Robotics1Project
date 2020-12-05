@@ -33,6 +33,7 @@ def gripper_init(robot):
 def reach_far():
     finger1.setPosition(0.025)
     finger2.setPosition(0.025)
+    joint1.setPosition(0)
     joint2.setPosition(-1.13)
     joint3.setPosition(-0.4)
     joint4.setPosition(-0.4)
@@ -41,6 +42,7 @@ def reach_far():
 def reach_high():
     finger1.setPosition(0.025)
     finger2.setPosition(0.025)
+    joint1.setPosition(0)
     joint2.setPosition(0)
     joint3.setPosition(0)
     joint4.setPosition(-1.37)
@@ -49,6 +51,7 @@ def reach_high():
 def reach_in_front():
     finger1.setPosition(0.025)
     finger2.setPosition(0.025)
+    joint1.setPosition(0)
     joint2.setPosition(-0.5)
     joint3.setPosition(-1)
     joint4.setPosition(-1.57)

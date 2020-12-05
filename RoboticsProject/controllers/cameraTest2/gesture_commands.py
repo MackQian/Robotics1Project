@@ -43,10 +43,10 @@ def command3(key):
 def command4(key):
     #reach far
     if key==KEY_W:
-        reach_far()
+        grip()
     #reach high
     elif key==KEY_S:
-        reach_high()
+        release()
     #slide left
     elif key==KEY_A:
         slide_left()
@@ -57,13 +57,13 @@ def command4(key):
 def command5(key):
     #grip an object
     if key==KEY_W:
-        grip()
+        reach_far()
     #release grip
     elif key==KEY_S:
-        release()
-    #put object over platform
-    elif key==KEY_SPACE:
-        collect()
-    elif key==KEY_A:
         reach_in_front()
+    #put object over platform
+    elif key==KEY_A:
+        reach_high()
+    elif key==KEY_D:
+        collect()
 
