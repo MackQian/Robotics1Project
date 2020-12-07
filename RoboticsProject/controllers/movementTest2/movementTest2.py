@@ -31,7 +31,8 @@ def display_helper_message():
     print(" C: Collect\n");
     print(" G: Grip\n");
     print(" R: Release\n");
-    print(" Space: Reset\n");
+    print(" X: Reset\n");
+    print(" Space: Stop\n");
 
 def commands(i):
     switcher={

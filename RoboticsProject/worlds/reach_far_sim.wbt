@@ -1,0 +1,233 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  basicTimeStep 16
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      material1 "InteriorWheelMat"
+      coulombFriction [
+        1.8, 0, 0.2
+      ]
+      frictionRotation -0.9648 0
+      bounce 0
+      forceDependentSlip [
+        10, 0
+      ]
+    }
+    ContactProperties {
+      material1 "ExteriorWheelMat"
+      coulombFriction [
+        1.8, 0, 0.2
+      ]
+      frictionRotation 0.9648 0
+      bounce 0
+      forceDependentSlip [
+        10, 0
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.9863564390880469 -0.1468250028195232 -0.0744539697839896 5.488410174867046
+  position 0.26528306320733663 1.4670458516194946 2.7048390812354226
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0 0 -0.5
+  floorSize 3.5 5
+  floorTileSize 0.25 0.25
+  wallHeight 0.05
+}
+Transform {
+  translation -1.17069 0.756438 1.74999
+  rotation 1 0 0 0
+}
+WoodenBox {
+  translation -1.55 0.275 0.36
+  name "wooden box(3)"
+  size 0.4 0.55 0.6
+}
+WoodenBox {
+  translation -0.8 0.125 -1.4
+  name "wooden box(5)"
+  size 1 0.2 0.6
+}
+WoodenBox {
+  translation -1.52 0.495 -1.4
+  name "wooden box(4)"
+  size 0.4 1 0.6
+}
+WoodenBox {
+  translation -1.24 0.11 0.97
+  size 1 0.2 0.5
+}
+WoodenBox {
+  translation 0.48 0.08 -0.27
+  name "wooden box(2)"
+  size 2.5 0.15 0.5
+}
+WoodenBox {
+  translation -0.79 0.11 -2.34
+  name "wooden box(6)"
+  size 1 0.2 1.3
+}
+Solid {
+  translation 0.72 0.03 -1.47
+  rotation 9.58979e-09 1 -5.06897e-15 3.14159
+  scale 0.37 0.37 0.37
+  children [
+    DEF RAMP Group {
+      children [
+        Transform {
+          translation -1.841 0.45 0
+          rotation 0 0 1 0.5236
+          children [
+            Shape {
+              appearance DEF APPEARANCE PBRAppearance {
+                baseColor 0.5 0.5 0.5
+                roughness 0.3
+                metalness 0
+              }
+              geometry Box {
+                size 2 0.1 2
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0.9434 0
+          children [
+            Shape {
+              appearance USE APPEARANCE
+              geometry Box {
+                size 2 0.1 2
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 1.841 0.45 0
+          rotation 0 0 1 -0.5236
+          children [
+            Shape {
+              appearance USE APPEARANCE
+              geometry Box {
+                size 2 0.1 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "ramp 30 degrees"
+  model "ramp 30 degrees"
+  boundingObject USE RAMP
+}
+RubberDuck {
+  translation -1.40768 1.0154690091033967 -1.14504
+  rotation 4.547535203302965e-13 1 9.222896924159788e-14 -0.0017674182505884749
+}
+WoodenBox {
+  translation 0.41 0.11 0.99
+  rotation 0 1 0 -1.5707953071795862
+  name "wooden box(1)"
+  size 2 0.2 0.7
+}
+Youbot {
+  hidden position_0_0 27.391993248788886
+  hidden position_0_1 27.39199323004461
+  hidden position_0_2 27.391995229949615
+  hidden position_0_3 27.39199520737745
+  hidden linearVelocity_0 -0.003803103757306671 0.00040852127206894443 0.00013762798254099646
+  hidden angularVelocity_0 8.108676171342893e-05 0.0004546779235265891 -0.00146753051853256
+  hidden position_3_0 -1.201865448097886e-06
+  hidden rotation_4 0 0 -1 1.2017396184001121e-06
+  hidden position_4_0 -1.3042805725382221e-07
+  hidden linearVelocity_4 -0.003519950079525749 0.00016082092561098624 7.837712833584133e-05
+  hidden angularVelocity_4 8.170385165394848e-05 0.000443749520840404 -0.0014751854427419383
+  hidden rotation_5 0 1 0 1.2990531157078367e-07
+  hidden position_5_0 -1.6854761210155933e-07
+  hidden linearVelocity_5 -0.0033331978986956513 0.00013040148594560481 8.031495203306887e-05
+  hidden angularVelocity_5 8.21228154942893e-05 0.00044388399159195867 -0.0014807537151086945
+  hidden rotation_6 0 0.9999999999999999 0 1.6858739404357617e-07
+  hidden position_6_0 -3.821880750778365e-09
+  hidden linearVelocity_6 -0.003130963328950984 0.00013401652874490388 9.312580643642578e-05
+  hidden angularVelocity_6 8.229013578565205e-05 0.00044374387912914787 -0.0014842684832668562
+  hidden position_7_0 1.022474841968908e-09
+  hidden linearVelocity_7 -0.0029700823516136277 0.00013180842542986394 0.0001016571898237521
+  hidden angularVelocity_7 8.232848070335176e-05 0.00044375101482278106 -0.0014847147173660446
+  hidden position_8_0 4.4108012534077906e-10
+  hidden position_8_1 -1.4626935811134682e-11
+  hidden linearVelocity_8 -0.0028194586280805116 0.00013151186976889485 0.00010999755752737791
+  hidden angularVelocity_8 8.23388716899838e-05 0.0004437615001899077 -0.0014848378328535423
+  hidden translation_9 0 4.4108012534077906e-10 0.09
+  hidden linearVelocity_9 -0.002727184935273061 0.0001321478767647655 0.00011531619909114035
+  hidden angularVelocity_9 8.23394169871161e-05 0.0004437604969489417 -0.0014848444010225864
+  hidden linearVelocity_10 -0.0027183016833538277 0.00013053109104597865 0.00011532006338083186
+  hidden angularVelocity_10 8.233945265439485e-05 0.0004437625422633769 -0.0014848445550791818
+  hidden rotation_11 0 1 0 2.25925202007054
+  hidden linearVelocity_11 -0.0037492664694096615 6.383219339003391e-05 3.288776124373802e-05
+  hidden angularVelocity_11 0.003955465856222778 -4.046176815541286e-05 -4.0014606067448515
+  hidden rotation_12 0 1 0 2.2592520013262627
+  hidden linearVelocity_12 -0.0038931764972252696 8.848830133345555e-05 3.625393958515212e-05
+  hidden angularVelocity_12 0.003953962526470962 -4.4623231640634337e-05 -4.001460557179888
+  hidden rotation_13 0 1 0 2.2592540012312687
+  hidden linearVelocity_13 -0.003750406428336562 0.0007196357356008317 0.00024074294274762254
+  hidden angularVelocity_13 0.003954366690477823 -4.403693865443099e-05 -4.0014620868911
+  hidden rotation_14 0 0.9999999999999999 0 2.259253978659106
+  hidden linearVelocity_14 -0.0038943103817861945 0.0007442918337162055 0.00024367112447674748
+  hidden angularVelocity_14 0.003955179069870075 -4.103063534587233e-05 -4.001462032005727
+  translation -0.2285250251292872 0.10190504933445892 1.6602409407429266
+  rotation 0.9999989764119264 -0.00039753539076212944 0.0013744601532563227 -1.570919239825828
+  controller "movementTest2"
+  bodySlot [
+    GPS {
+    }
+    Camera {
+      translation 0.3 0 0
+      rotation 0.5773502691896258 -0.5773502691896258 -0.5773502691896258 2.0943951023931957
+    }
+  ]
+}
+BiscuitBox {
+  translation -0.26 0.17992152000961512 -0.13
+  rotation 0.577349625279648 -0.5773505911443454 0.5773505911443451 2.0943960682584315
+  size 0.12 0.03 0.05
+}
+BiscuitBox {
+  translation 0.4799999999991859 0.23492152000046038 1.66
+  rotation -1.8412181266880342e-06 -0.7071067811853492 0.7071067811853489 -3.141588971126143
+  name "biscuit box(2)"
+  size 0.12 0.03 0.05
+}
+BiscuitBox {
+  translation -1.4225957281827024 0.5749215200000003 0.40999300159460017
+  rotation -1.7918377718275877e-06 -0.7071067811854129 0.7071067811854119 -3.141589069924867
+  name "biscuit box(1)"
+  size 0.12 0.03 0.05
+}
+Solid {
+  translation 0.15 0.1 1.71
+  scale 2 2 2
+  children [
+    Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url [
+            "assets/redlefthand.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject Box {
+    size 0.1 0.1 0.1
+  }
+}

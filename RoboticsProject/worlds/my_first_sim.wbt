@@ -28,8 +28,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.9998044080402554 0.0192629664573195 -0.004481493784304466 5.442337980027905
-  position -0.054355354217453945 5.800758299376108 5.327433617733488
+  orientation 0.9710886053197919 -0.21317971345031747 -0.10743058405920494 5.426562373599939
+  position -0.08971337352874387 1.7598280401880708 3.0496227579108792
 }
 TexturedBackground {
 }
@@ -51,9 +51,9 @@ WoodenBox {
   size 0.4 0.55 0.6
 }
 WoodenBox {
-  translation -0.56 0.125 -1.4
+  translation -0.8 0.125 -1.4
   name "wooden box(5)"
-  size 1.5 0.2 0.6
+  size 1 0.2 0.6
 }
 WoodenBox {
   translation -1.52 0.495 -1.4
@@ -70,14 +70,14 @@ WoodenBox {
   size 2.5 0.15 0.5
 }
 WoodenBox {
-  translation -0.35 0.11 -2.34
+  translation -0.79 0.11 -2.34
   name "wooden box(6)"
   size 1 0.2 1.3
 }
 Solid {
-  translation 0.94 0.03 -1.39
+  translation 0.72 0.03 -1.47
   rotation 9.58979e-09 1 -5.06897e-15 3.14159
-  scale 0.3 0.3 0.3
+  scale 0.37 0.37 0.37
   children [
     DEF RAMP Group {
       children [
@@ -132,13 +132,13 @@ RubberDuck {
   rotation 7.124043348679607e-13 1 4.310580035899488e-14 -0.0017674182505884777
 }
 WoodenBox {
-  translation 0.27 0.11 0.99
+  translation 0.41 0.11 0.99
   rotation 0 1 0 -1.5707953071795862
   name "wooden box(1)"
   size 2 0.2 0.7
 }
 Youbot {
-  translation -1.35973 0.101937 1.65999
+  translation -0.47973 0.100525 1.66
   rotation 0.9999993680079945 -0.0008260237261198519 0.0007626718925599744 -1.5708374065847532
   controller "movementTest2"
   bodySlot [
@@ -156,7 +156,7 @@ BiscuitBox {
   size 0.12 0.03 0.05
 }
 BiscuitBox {
-  translation 0.32 0.234922 1.66
+  translation 0.48 0.234922 1.66
   rotation -1.8412296392221332e-06 -0.7071067811853496 0.7071067811853482 -3.1415889711491682
   name "biscuit box(2)"
   size 0.12 0.03 0.05
@@ -168,7 +168,7 @@ BiscuitBox {
   size 0.12 0.03 0.05
 }
 Solid {
-  translation 0.01 0.1 1.71
+  translation 0.15 0.1 1.71
   scale 2 2 2
   children [
     Shape {
