@@ -8,8 +8,6 @@ import numpy as np
 from controller import Keyboard
 from movement_commands import *
 from gesture_commands import *
-#install with pip install scikit-image
-from skimage.measure import compare_ssim
 
 import math
 KEY_F=70
@@ -17,22 +15,22 @@ def display_helper_message():
     print("Gesture commands:\n");
     print(" 0 Fingers + W: Reset\n");
     print(" 0 Fingers + S:     Stop\n\n");
-    
+
     print(" 2 Finger + W:  Move Forward\n");
     print(" 2 Finger + S:  Move Backward\n");
     print(" 2 Finger + A:  Turn Left\n");
     print(" 2 Finger + D:  Turn Right\n\n");
-    
+
     print(" 3 Finger + W:  Rotate Forward\n");
     print(" 3 Finger + S:  Rotate Backward\n");
     print(" 3 Finger + A:  Rotate Left\n");
     print(" 3 Finger + D:  Rotate Right\n\n");
-    
+
     print(" 4 Fingers + W: Grip\n");
     print(" 4 Fingers + S: Release\n\n");
     print(" 4 Fingers + A: Slide Left\n");
     print(" 4 Fingers + D: Slide Right\n\n");
-    
+
     print(" 5 Fingers + W: Reach Far\n");
     print(" 5 Fingers + S: Reach In-Front\n");
     print(" 5 Fingers + A: Reach High\n\n");
@@ -42,35 +40,60 @@ robot = Robot()
 
 # get the time step of the current world.
 timestep = int(robot.getBasicTimeStep())
-# You should insert a getDevice-like function in order to get the
-# instance of a device of the robot. Something like:
-#  motor = robot.getMotor('motorname')
-#  ds = robot.getDistanceSensor('dsname')
-#  ds.enable(timestep)
 
-#recalibrates the background
-def noiseCalibrate(cap,rob,bbLC,bbRC):
-    diffPercent=0
-    for i in range(30):
-        ret,frame=cap.read()
-        roi=frame[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
-        (score,diff)=compare_ssim(rob,roi,full=True,multichannel=True)
-        diffPercent+=score
-    diffPercent/=30
-    return diffPercent-.03
-#get camera device
+#init vision stuff
 cap = cv2.VideoCapture(0)
+fgbg = cv2.createBackgroundSubtractorMOG2(0,50)
+kernel=cv2.getStructuringElement(cv2.MORPH_RECT,(2,2))
+matcher=cv2.DescriptorMatcher_create(cv2.DescriptorMatcher_BRUTEFORCE_HAMMING)
+detect=cv2.AKAZE.create()
 
-bbLC=(0,0)
-bbRC=(300,300)
 textOrg=(20,50)
-kernel=np.ones((5,5),np.uint8)
 
-dontcare,temp=cap.read()
-rob=temp[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
+#can change to support more or less, but 5 to support the finger gap code
+numGestures=5
 
-#compute mean image difference so code doesnt pick up noise
-diffPercent=noiseCalibrate(cap,rob,bbLC,bbRC)
+x=0
+while x<10:
+    ret, frame = cap.read()
+    x+=1
+
+x=0
+while x<10:
+    ret, frame = cap.read()
+    img= fgbg.apply(frame,learningRate=0)
+    x+=1
+#gather gestures
+desList=[]
+while len(desList)<numGestures:
+    while True:
+        ret,img=cap.read()
+        cam=img
+        img=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+        img=cv2.bilateralFilter(img,9,300,150)
+        img= cv2.GaussianBlur(img,(5,5),0)
+        img= fgbg.apply(img,learningRate=0)
+        img= cv2.morphologyEx(img,cv2.MORPH_ERODE,kernel)
+        img= cv2.morphologyEx(img,cv2.MORPH_DILATE,kernel,iterations=2)
+        img= cv2.threshold(img, 128, 255, cv2.THRESH_BINARY| cv2.THRESH_OTSU)[1]
+
+        cv2.imshow('img',img)
+        cv2.imshow('cam',cam)
+        if(cv2.waitKey(1) & 0xFF == ord('q')):
+            break
+    cv2.destroyAllWindows()
+
+    kp,des=detect.detectAndCompute(img,None)
+
+    imgWkp=cv2.drawKeypoints(img,kp,None)
+
+    cv2.imshow('img',img)
+    cv2.imshow('kp',imgWkp)
+    key=cv2.waitKey(0)
+    if key!=ord('r'):
+        desList.append(des)
+    cv2.destroyAllWindows()
+
 
 #initialize the robot
 gripper_init(robot)
@@ -84,93 +107,98 @@ display_helper_message()
 #CURRENTLY 1 FINGER UP and 0 FINGERS ARE IDENTICAL
 #FOR BEST RESULTS USE WITH CONTRASTED BACKGROUND TO HAND
 fingerCount=0
+
 prevCount=0
 key=keyboard.getKey()
 prevkey=0
 
-while robot.step(timestep) != -1:
+# array to store last prevNum computed gestures, used in deciding what gesture to output
+prev=[]
+prevNum=10
 
+#threshold of similarity, must pass this to register as a gesture
+thresh=.2
+
+while robot.step(timestep) != -1:
+    #read and clean
     ret,frame=cap.read()
-    roi=frame[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
-    (score,diff)=compare_ssim(rob,roi,full=True,multichannel=True)
-    cv2.rectangle(frame,bbLC,bbRC,(0,255,0),0)
-    #if the new frame is different enough from the background, run the following...
-    if(score<diffPercent):
-        #get the difference matrix into an image
-        diff = (diff * 255).astype("uint8")
-        #reduces noise
-        diff = cv2.morphologyEx(diff,cv2.MORPH_OPEN,kernel)
-        #conv to grayscale
-        diff = cv2.cvtColor(diff,cv2.COLOR_BGR2GRAY)
-        #more noise reduction/ fills in gaps on the hand
-        diff = cv2.GaussianBlur(diff,(5,5),100)
-        #convert into binary image, extracts hand shape basically
-        th= cv2.threshold(diff, 0, 255, cv2.THRESH_BINARY_INV| cv2.THRESH_OTSU)[1]
-        #compute contours of the hand
-        cnt, hierarchy = cv2.findContours(th, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        cnt = max(cnt, key=lambda x: cv2.contourArea(x))
-        cv2.drawContours(frame, [cnt], -1, (255,255,0), 2)
-        #compute convex hull and find defects to find finger gaps
-        hull = cv2.convexHull(cnt,returnPoints = False)
-        defects = cv2.convexityDefects(cnt,hull)
-        #sources: https://medium.com/analytics-vidhya/hand-detection-and-finger-counting-using-opencv-python-5b594704eb08
-        #https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_contours/py_contours_more_functions/py_contours_more_functions.html
-        if defects is not None:
-            count=0
-            for i in range(defects.shape[0]):
-                s,e,f,d = defects[i,0]
-                start = tuple(cnt[s][0])
-                end = tuple(cnt[e][0])
-                far = tuple(cnt[f][0])
-                #draw hull
-                cv2.line(frame,start,end,[0,255,0],2)
-                #compute triangle from the contour
-                a = np.sqrt((end[0] - start[0]) ** 2 + (end[1] - start[1]) ** 2)
-                b = np.sqrt((far[0] - start[0]) ** 2 + (far[1] - start[1]) ** 2)
-                c = np.sqrt((end[0] - far[0]) ** 2 + (end[1] - far[1]) ** 2)
-                angle = np.arccos((b ** 2 + c ** 2 - a ** 2) / (2 * b * c))
-                #this step cleans up the small defects, since the finger gaps are
-                #much larger than any other onesf
-                if angle <= np.pi/2:  # angle less than 90 degree, treat as finger gaps
-                    count += 1
-                    #draw fingers
-                    cv2.line(frame,start,far,[255,0,0],2)
-                    cv2.line(frame,far,end,[255,0,0],2)
-                    #finger gap point
-                    cv2.circle(frame, far, 4, [0, 0, 255], -1)
-            if count > 0:
-              count = count+1
-            prevCount=fingerCount
-            fingerCount=count
-            cv2.putText(frame, str(fingerCount), textOrg,cv2.FONT_HERSHEY_SIMPLEX,1,[255,255,255])
+    frame=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+    frame=cv2.bilateralFilter(frame,9,300,150)
+    frame= cv2.GaussianBlur(frame,(5,5),0)
+    frame= fgbg.apply(frame,learningRate=0)
+    frame= cv2.morphologyEx(frame,cv2.MORPH_ERODE,kernel)
+    frame= cv2.morphologyEx(frame,cv2.MORPH_DILATE,kernel,iterations=5)
+    frame= cv2.threshold(frame, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+    #compute key points
+    kpt,dest=detect.detectAndCompute(frame,None)
+    showImg=cv2.drawKeypoints(frame,kpt,None)
+
+    ratGood=0
+    index=-1
+
+    #loop to compare defined gestures to camera input
+    for i,d in enumerate(desList):
+        #find keypoint matches
+        try:
+            matches=matcher.knnMatch(d,dest,k=2)
+        except:
+            cv2.imshow('img',showImg)
+            continue
+        #find the actual good ones with Lowes ratio test
+        if not matches is None:
+            goodOnes=[]
+            rat=0.0
+            try:
+                for m1,m2 in matches:
+                    if m1.distance<0.75 * m2.distance:
+                        goodOnes.append(m1)
+                        rat+=1
+            except:
+                continue
+            #compute ratio of matches to number of gesture keypoints
+            rat/=len(d)
+            if rat>ratGood:
+                ratGood=rat
+                index=i
+    #compare against threshold
+    if ratGood>thresh and index !=-1:
+        print(index)
+        cv2.putText(showImg, str(index), textOrg,cv2.FONT_HERSHEY_SIMPLEX,1,[255,255,255])
+        prevCount=fingerCount
+        fingerCount=index
+    #no matches
     else:
-        th = np.zeros(roi.shape, dtype='uint8')
-    
-    cv2.imshow('diff',diff)
-    cv2.imshow('sanitized',th)
-    cv2.imshow('Frame',frame)
+        cv2.putText(showImg, 'no matches', textOrg,cv2.FONT_HERSHEY_SIMPLEX,1,[255,255,255])
+        fingerCount=-1
+    cv2.imshow('img',showImg)
+
+    # the match command module
     prevkey=key
     key=keyboard.getKey()
-    if fingerCount==5 and (prevCount!=fingerCount or prevkey!=key):
+    if len(prev)<prevNum:
+        prev.append(fingerCount)
+    else:
+        temp=max(prev,key=prev.count)
+        prev.pop(0)
+        prev.append(fingerCount)
+        fingerCount=temp
+    if fingerCount==4 and (prevCount!=fingerCount or prevkey!=key):
         command5(key)
-    elif fingerCount==4 and (prevCount!=fingerCount or prevkey!=key):
-        command4(key)
     elif fingerCount==3 and (prevCount!=fingerCount or prevkey!=key):
-        command3(key)
+        command4(key)
     elif fingerCount==2 and (prevCount!=fingerCount or prevkey!=key):
+        command3(key)
+    elif fingerCount==1 and (prevCount!=fingerCount or prevkey!=key):
         command2(key)
     elif fingerCount==0 and (prevCount!=fingerCount or prevkey!=key):
         command0(key)
-    
+    elif fingerCount==-1:
+        stop()
+
     if(cv2.waitKey(1) & 0xFF == ord('q')):
         break
     #USE THIS TO RECALIBRATE THE BACKGROUND, kinda buggy, hold down R until camera freezes
     if (cv2.waitKey(1) & 0xFF == ord('r')):
-        dontcare,temp=cap.read()
-        rob=temp[bbLC[0]:bbRC[0], bbLC[1]:bbRC[1]]
-        diffPercent=noiseCalibrate(cap,rob,bbLC,bbRC)
-        bkgrem=cv2.bgsegm.createBackgroundSubtractorGSOC(replaceRate=0,propagationRate=0)
+        fgbg = cv2.createBackgroundSubtractorMOG2(0,50)
 cap.release()
 cv2.destroyAllWindows()
-
-# Enter here exit cleanup code.
