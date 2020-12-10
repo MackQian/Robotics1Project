@@ -114,7 +114,7 @@ prevkey=0
 
 # array to store last prevNum computed gestures, used in deciding what gesture to output
 prev=[]
-prevNum=10
+prevNum=5
 
 #threshold of similarity, must pass this to register as a gesture
 thresh=.2
@@ -163,9 +163,17 @@ while robot.step(timestep) != -1:
     #compare against threshold
     if ratGood>thresh and index !=-1:
         print(index)
-        cv2.putText(showImg, str(index), textOrg,cv2.FONT_HERSHEY_SIMPLEX,1,[255,255,255])
         prevCount=fingerCount
+        #slow update for less twitchiness
         fingerCount=index
+        if len(prev)<prevNum:
+            prev.append(fingerCount)
+        else:
+            temp=max(prev,key=prev.count)
+            prev.pop(0)
+            prev.append(fingerCount)
+            fingerCount=temp
+        cv2.putText(showImg, str(fingerCount), textOrg,cv2.FONT_HERSHEY_SIMPLEX,1,[255,255,255])
     #no matches
     else:
         cv2.putText(showImg, 'no matches', textOrg,cv2.FONT_HERSHEY_SIMPLEX,1,[255,255,255])
@@ -175,13 +183,6 @@ while robot.step(timestep) != -1:
     # the match command module
     prevkey=key
     key=keyboard.getKey()
-    if len(prev)<prevNum:
-        prev.append(fingerCount)
-    else:
-        temp=max(prev,key=prev.count)
-        prev.pop(0)
-        prev.append(fingerCount)
-        fingerCount=temp
     if fingerCount==4 and (prevCount!=fingerCount or prevkey!=key):
         command5(key)
     elif fingerCount==3 and (prevCount!=fingerCount or prevkey!=key):
